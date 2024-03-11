@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-cast
+spec:
+  replicas: {{ .Values.casts.replicaCount }}
+  selector:
+    matchLabels:
+      app: fastapi-cast
+  template:
+    metadata:
+      labels:
+        app: fastapi-cast
+    spec:
+      containers:
+      - name: fastapi-cast
+        image: "{{ .Values.casts.image.repository }}:{{ .Values.casts.image.tag | default .Chart.AppVersion }}"
+        command: ["uvicorn"]
+        args: ["app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
+        env:
+        - name: DATABASE_URI
+          value: "postgresql://$(USERNAME):$(PASSWORD)@$(HOST):$(PORT)/$(NAME)"
+        envFrom:
+          - secretRef:
+              name: fastapi-cast-credentials
+          - configMapRef:
+              name: fastapi-cast-config
+        ports:
+        - containerPort: 8000

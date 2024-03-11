@@ -1,0 +1,37 @@
+# Default values for helm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace: ""
+
+casts:
+  # Nombre de réplicas pour le service de casts
+  replicaCount: 1
+  image:
+    # Image utilisée pour le service de casts
+    repository: selimbhs/casts
+    tag: ""
+
+movies:
+  # Nombre de réplicas pour le service de movies
+  replicaCount: 1
+  image:
+    # Image utilisée pour le service de movies
+    repository: selimbhs/movies
+    tag: ""
+
+db_casts:
+  # Nombre de réplicas pour la base de données des casts
+  replicaCount: 1
+  image:
+    # Image utilisée pour la base de données des casts
+    repository: postgres
+    tag: 12.0-alpine
+
+db_movies:
+  # Nombre de réplicas pour la base de données des movies
+  replicaCount: 1
+  image:
+    # Image utilisée pour la base de données des movies
+    repository: postgres
+    tag: 12.0-alpine
